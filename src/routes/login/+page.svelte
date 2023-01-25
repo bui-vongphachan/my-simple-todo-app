@@ -7,8 +7,8 @@
 	let isSubmiting = false;
 
 	let body = {
-		username: 'kminchelle',
-		password: '0lelplR'
+		username: '',
+		password: ''
 	};
 
 	async function submit() {
