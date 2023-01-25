@@ -6,6 +6,7 @@
 	import '../app.css';
 	import Navbar from '../lib/components/Navbar.svelte';
 	import { inject } from '@vercel/analytics';
+	import PageFade from '$lib/components/PageFade.svelte';
 
 	let analyticsId = import.meta.env.VERCEL_ANALYTICS_ID as string;
 
