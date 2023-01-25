@@ -7,11 +7,10 @@
 	import { isAuthenticated } from '$lib/store/auth';
 	import { PATH_TO_LOGIN } from '$lib/constants/pagePath';
 	import { ENDPOINT_FOR_GETTING_TODOS } from '$lib/constants/apiPath';
-	import { page, navigating } from '$app/stores';
+	import { page } from '$app/stores';
 
 	let isFetching = true;
 	let pages = 1;
-	const currentUrl = $page.route.id;
 
 	export let data: Pagination<Todo> = {
 		items: [],
@@ -57,13 +56,14 @@
 {#if isFetching}
 	<Loading />
 {:else}
-	<h1 class=" mb-4">Todo, {data.total}</h1>
+	<h1 class=" mb-4 prose-2xl">Todo list</h1>
+	<hr class=" my-8" />
 	<div class=" flex flex-col gap-8">
 		<div class=" grid grid-cols-12 gap-[2rem]">
 			{#each data.items as item}
 				<a
 					href="/todos/{item.id}"
-					class="col-span-3 min-h-[100px] transition-all duration-300 rounded-md hover:shadow-md hover:cursor-pointer p-4"
+					class="border-[1px] col-span-3 min-h-[100px] transition-all duration-300 rounded-md hover:shadow-md hover:cursor-pointer p-4"
 				>
 					<p class={item.completed ? ' text-green-500' : ''}>{item.todo}</p>
 				</a>

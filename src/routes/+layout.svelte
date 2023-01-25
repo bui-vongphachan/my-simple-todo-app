@@ -6,7 +6,7 @@
 
 {#if $isAuthenticated}
 	<Navbar />
-	<div class=" container m-auto py-[5rem]">
+	<div class=" container rounded-md m-auto my-[5rem] bg-white p-8">
 		<slot />
 	</div>
 {:else}
