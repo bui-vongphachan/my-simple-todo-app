@@ -28,10 +28,11 @@
 	async function updateStatus() {
 		isSubmiting = true;
 
+		const path =
+			import.meta.env.VITE_BACKEND_HOST + ENDPOINT_FOR_GETTING_A_TODO + $page.params.slug;
+
 		axios
-			.patch(`https://dummyjson.com/todos/${$page.params.slug}`, {
-				completed: !data?.completed
-			})
+			.patch(path, { completed: !data?.completed })
 			.then((response) => {
 				data = { ...response.data, items: response.data.todos };
 
@@ -43,25 +44,27 @@
 	}
 </script>
 
-{#if isFetching}
-	<Loading />
-{:else if !data}
-	<h1>Item not found</h1>
-{:else}
-	<div class=" max-w-[400px] m-auto shadow-md p-4 rounded-md flex flex-col gap-8">
-		<h1 class=" prose-lg">{data.todo}</h1>
-		<button
-			disabled={isSubmiting}
-			on:click={updateStatus}
-			class={` w-fit ${
-				isSubmiting
-					? ' bg-slate-400'
-					: data.completed
-					? 'bg-red-500 hover:bg-red-600'
-					: 'bg-green-500 hover:bg-green-600'
-			}  p-2 rounded-md text-white transition-all duration-300`}
-		>
-			{data.completed ? 'NOT COMPLETED' : 'COMPLETED'}
-		</button>
-	</div>
-{/if}
+<div class=" mt-40">
+	{#if isFetching}
+		<Loading />
+	{:else if !data}
+		<h1>Item not found</h1>
+	{:else}
+		<div class=" max-w-[400px] m-auto shadow-md p-4 rounded-md flex flex-col gap-8 bg-white">
+			<h1 class=" prose-lg">{data.todo}</h1>
+			<button
+				disabled={isSubmiting}
+				on:click={updateStatus}
+				class={` w-fit ${
+					isSubmiting
+						? ' bg-slate-400'
+						: data.completed
+						? 'bg-red-500 hover:bg-red-600'
+						: 'bg-green-500 hover:bg-green-600'
+				}  p-2 rounded-md text-white transition-all duration-300`}
+			>
+				{data.completed ? 'NOT COMPLETED' : 'COMPLETED'}
+			</button>
+		</div>
+	{/if}
+</div>
