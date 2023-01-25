@@ -8,8 +8,8 @@
 	let isSubmiting = false;
 
 	let body = {
-		username: '',
-		password: ''
+		username: import.meta.env.VITE_LOGIN_USERNAME || '',
+		password: import.meta.env.VITE_LOGIN_PASSWORD || ''
 	};
 
 	async function submit() {
