@@ -1,6 +1,6 @@
 import { getCLS, getFCP, getFID, getLCP, getTTFB, type Metric } from 'web-vitals';
 
-const vitalsUrl = 'https://vitals.vercel-analytics.com/v1/vitals';
+const vitalsUrl = import.meta.env.VITE_VERCEL_VITALS_URL;
 
 const n = navigator as any;
 function getConnectionSpeed() {
@@ -16,13 +16,13 @@ function sendToAnalytics(metric: Metric, options: any) {
 	);
 
 	const body = {
-		dsn: options.analyticsId, // qPgJqYH9LQX5o31Ormk8iWhCxZO
-		id: metric.id, // v2-1653884975443-1839479248192
-		page, // /blog/[slug]
-		href: location.href, // https://my-app.vercel.app/blog/my-test
-		event_name: metric.name, // TTFB
-		value: metric.value.toString(), // 60.20000000298023
-		speed: getConnectionSpeed() // 4g
+		dsn: options.analyticsId,
+		id: metric.id,
+		page,
+		href: location.href,
+		event_name: metric.name,
+		value: metric.value.toString(),
+		speed: getConnectionSpeed()
 	} as any;
 
 	if (options.debug) {
