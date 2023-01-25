@@ -2,14 +2,17 @@ import { getCLS, getFCP, getFID, getLCP, getTTFB, type Metric } from 'web-vitals
 
 const vitalsUrl = import.meta.env.VITE_VERCEL_VITALS_URL;
 
-const n = navigator as any;
 function getConnectionSpeed() {
+	const n = navigator as any;
+
 	return 'connection' in n && n['connection'] && 'effectiveType' in n['connection']
 		? n['connection']['effectiveType']
 		: '';
 }
 
 function sendToAnalytics(metric: Metric, options: any) {
+	const n = navigator as any;
+
 	const page = Object.entries(options.params).reduce(
 		(acc, [key, value]) => acc.replace(value, `[${key}]`),
 		options.path
