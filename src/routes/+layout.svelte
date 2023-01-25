@@ -5,6 +5,7 @@
 	import { webVitals } from '$lib/vitals';
 	import '../app.css';
 	import Navbar from '../lib/components/Navbar.svelte';
+	import { inject } from '@vercel/analytics';
 
 	let analyticsId = import.meta.env.VERCEL_ANALYTICS_ID as string;
 
@@ -14,6 +15,8 @@
 			params: $page.params,
 			analyticsId
 		});
+
+		inject();
 	}
 </script>
 

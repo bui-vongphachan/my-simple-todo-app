@@ -8,7 +8,6 @@
 	import { PATH_TO_LOGIN } from '$lib/constants/pagePath';
 	import { ENDPOINT_FOR_GETTING_TODOS } from '$lib/constants/apiPath';
 	import { page } from '$app/stores';
-	import { inject } from '@vercel/analytics';
 
 	let isFetching = true;
 	let pages = 1;
@@ -40,8 +39,6 @@
 
 	onMount(async () => {
 		if (!$isAuthenticated) return goto(PATH_TO_LOGIN);
-
-		inject();
 	});
 
 	const pageUnsubscriber = page.subscribe(async (props) => {
