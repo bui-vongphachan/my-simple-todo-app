@@ -15,8 +15,6 @@
 			analyticsId
 		});
 	}
-
-	console.log(analyticsId);
 </script>
 
 {#if $isAuthenticated}
