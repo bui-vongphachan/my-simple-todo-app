@@ -44,6 +44,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{data?.todo || 'Todo'} | My Simple Todo Application</title>
+</svelte:head>
+
 <div class=" mt-40">
 	{#if isFetching}
 		<Loading />

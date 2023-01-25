@@ -54,6 +54,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Todos | My Simple Todo Application</title>
+</svelte:head>
+
 <Container>
 	{#if isFetching}
 		<Loading />

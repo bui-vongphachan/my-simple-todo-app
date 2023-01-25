@@ -32,6 +32,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Login | My Simple Todo Application</title>
+</svelte:head>
+
 <div class="w-[500px] mx-auto mt-40 flex flex-col gap-4 bg-white px-8 py-12 rounded-md shadow-xl">
 	<h1 class=" prose-2xl text-center">Login</h1>
 	<form on:submit={submit} class="flex flex-col gap-4">
