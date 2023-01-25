@@ -9,6 +9,7 @@
 	import { ENDPOINT_FOR_GETTING_TODOS } from '$lib/constants/apiPath';
 	import { page } from '$app/stores';
 	import Container from '$lib/components/Container.svelte';
+	import PageFade from '$lib/components/PageFade.svelte';
 
 	let isFetching = true;
 	let pages = 1;
@@ -38,7 +39,7 @@
 		isFetching = false;
 	}
 
-	onMount(async () => {
+	onMount(() => {
 		if (!$isAuthenticated) return goto(PATH_TO_LOGIN);
 	});
 
@@ -54,35 +55,40 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Todos | My Simple Todo Application</title>
+</svelte:head>
 <Container>
 	{#if isFetching}
 		<Loading />
 	{:else}
-		<h1 class=" mb-4 prose-2xl">Todo list</h1>
-		<hr class=" my-8" />
-		<div class=" flex flex-col gap-8">
-			<div class=" grid grid-cols-12 gap-[2rem]">
-				{#each data.items as item}
-					<a
-						href="/todos/{item.id}"
-						class="border-[1px] col-span-3 min-h-[100px] transition-all duration-300 rounded-md hover:shadow-md hover:cursor-pointer p-4"
-					>
-						<p class={item.completed ? ' text-green-500' : ''}>{item.todo}</p>
-					</a>
-				{/each}
+		<PageFade>
+			<h1 class=" mb-4 prose-2xl">Todo list</h1>
+			<hr class=" my-8" />
+			<div class=" flex flex-col gap-8">
+				<div class=" grid grid-cols-12 gap-[2rem]">
+					{#each data.items as item}
+						<a
+							href="/todos/{item.id}"
+							class="border-[1px] col-span-3 min-h-[100px] transition-all duration-300 rounded-md hover:shadow-md hover:cursor-pointer p-4"
+						>
+							<p class={item.completed ? ' text-green-500' : ''}>{item.todo}</p>
+						</a>
+					{/each}
+				</div>
+				<div class=" w-fit m-auto flex gap-4">
+					{#each Array(pages) as _, index}
+						<a
+							href={`/?limit=${data.limit}&skip=${index * data.limit}`}
+							class={`${
+								data.skip === index * data.limit
+									? ' bg-slate-300 cursor-default pointer-events-none'
+									: ' bg-green-500 hover:bg-green-600'
+							}  p-4 rounded-md text-white transition-all duration-300 block w-fit`}>{1 + index}</a
+						>
+					{/each}
+				</div>
 			</div>
-			<div class=" w-fit m-auto flex gap-4">
-				{#each Array(pages) as _, index}
-					<a
-						href={`/?limit=${data.limit}&skip=${index * data.limit}`}
-						class={`${
-							data.skip === index * data.limit
-								? ' bg-slate-300 cursor-default pointer-events-none'
-								: ' bg-green-500 hover:bg-green-600'
-						}  p-4 rounded-md text-white transition-all duration-300 block w-fit`}>{1 + index}</a
-					>
-				{/each}
-			</div>
-		</div>
+		</PageFade>
 	{/if}
 </Container>
