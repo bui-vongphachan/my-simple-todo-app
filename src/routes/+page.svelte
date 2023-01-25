@@ -38,7 +38,7 @@
 		isFetching = false;
 	}
 
-	onMount(async () => {
+	onMount(() => {
 		if (!$isAuthenticated) return goto(PATH_TO_LOGIN);
 	});
 

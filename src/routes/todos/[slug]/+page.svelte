@@ -16,13 +16,14 @@
 	onMount(async () => {
 		if (!$isAuthenticated) return goto(PATH_TO_LOGIN);
 
-		const response = await axios.get(
-			import.meta.env.VITE_BACKEND_HOST + ENDPOINT_FOR_GETTING_A_TODO + $page.params.slug
-		);
-
-		data = { ...response.data, items: response.data.todos };
-
-		isFetching = false;
+		axios
+			.get(import.meta.env.VITE_BACKEND_HOST + ENDPOINT_FOR_GETTING_A_TODO + $page.params.slug)
+			.then((response) => {
+				data = { ...response.data, items: response.data.todos };
+			})
+			.finally(() => {
+				isFetching = false;
+			});
 	});
 
 	async function updateStatus() {
@@ -52,7 +53,7 @@
 	{#if isFetching}
 		<Loading />
 	{:else if !data}
-		<h1>Item not found</h1>
+		<h1 class=" text-center prose-2xl">Item not found</h1>
 	{:else}
 		<div class=" max-w-[400px] m-auto shadow-md p-4 rounded-md flex flex-col gap-8 bg-white">
 			<h1 class=" prose-lg">{data.todo}</h1>
