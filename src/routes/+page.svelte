@@ -14,7 +14,9 @@
 	let isFetching = true;
 	let pages = 1;
 
-	export let data: Pagination<Todo> = {
+	/** @type {import('./$types').PageData} */
+
+	export let _data: Pagination<Todo> = {
 		items: [],
 		skip: parseInt($page.url.searchParams.get('skip') || '0') || 0,
 		limit: parseInt($page.url.searchParams.get('limit') || '30') || 30,
@@ -33,7 +35,7 @@
 
 		const response = await axios.get(path);
 
-		data = { ...response.data, items: response.data.todos };
+		_data = { ...response.data, items: response.data.todos };
 		pages = response.data.total / response.data.limit;
 
 		isFetching = false;
@@ -67,7 +69,7 @@
 			<hr class=" my-8" />
 			<div class=" flex flex-col gap-8">
 				<div class=" grid grid-cols-12 gap-[2rem]">
-					{#each data.items as item}
+					{#each _data.items as item}
 						<a
 							href="/todos/{item.id}"
 							class="border-[1px] col-span-3 min-h-[100px] transition-all duration-300 rounded-md hover:shadow-md hover:cursor-pointer p-4"
@@ -79,9 +81,9 @@
 				<div class=" w-fit m-auto flex gap-4">
 					{#each Array(pages) as _, index}
 						<a
-							href={`/?limit=${data.limit}&skip=${index * data.limit}`}
+							href={`/?limit=${_data.limit}&skip=${index * _data.limit}`}
 							class={`${
-								data.skip === index * data.limit
+								_data.skip === index * _data.limit
 									? ' bg-slate-300 cursor-default pointer-events-none'
 									: ' bg-green-500 hover:bg-green-600'
 							}  p-4 rounded-md text-white transition-all duration-300 block w-fit`}>{1 + index}</a
